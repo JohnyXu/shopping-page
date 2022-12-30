@@ -75,10 +75,25 @@ const WrapperQuantity = styled.span`
 
 const StyleSub = styled.span`
   margin-right: 1rem;
+  @media only screen and (max-width: 800px) {
+    margin: 0;
+    padding: 0 1rem;
+  }
 `;
 
 const StyleAdd = styled.span`
   margin-left: 1rem;
+  @media only screen and (max-width: 800px) {
+    margin: 0;
+    padding: 0 1rem;
+  }
+`;
+
+const StyleQuantity = styled.div`
+  display: inline-block;
+  @media only screen and (max-width: 800px) {
+    padding: 0 1rem;
+  }
 `;
 
 const StyleEmpty = styled.h4`
@@ -147,7 +162,7 @@ export default function CheckOut() {
         >
           -
         </StyleSub>
-        {quantity}
+        <StyleQuantity> {quantity}</StyleQuantity>
         <StyleAdd
           onClick={() => {
             onChangeCallback(id, size, singlePrice, 1);
