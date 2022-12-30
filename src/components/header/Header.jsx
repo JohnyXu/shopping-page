@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { TiShoppingBag, TiShoppingCart } from 'react-icons/ti';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Wrapper = styled.header`
@@ -20,19 +19,31 @@ const WrapperIcon = styled.div`
   display: block;
   height: 30px;
 
-  span {
+  div {
     position: absolute;
+    right: 1rem;
+    top: 0rem;
+    border-radius: 50%;
     font-size: 0.9rem;
     right: -0.6rem;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: white;
+    }
   }
 `;
 
 export default function Header() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const orders = useSelector((state) => state.order.orders);
 
   const onShoppingCartClick = () => {
-    history.push('/checkout');
+    navigate('/checkout');
   };
 
   const totalQuantity = Object.values(orders).reduce((sum, order) => {
@@ -47,7 +58,9 @@ export default function Header() {
       <WrapperIcon onClick={onShoppingCartClick}>
         <TiShoppingCart size={40}></TiShoppingCart>
         {totalQuantity ? (
-          <span className="badge badge-pill badge-success">{totalQuantity}</span>
+          <div>
+            <span>{totalQuantity}</span>
+          </div>
         ) : null}
       </WrapperIcon>
     </Wrapper>

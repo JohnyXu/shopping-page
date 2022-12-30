@@ -21,7 +21,7 @@ const StyleOrder = styled.div`
   margin: 1rem 3rem 0 3rem;
 
   @media only screen and (max-width: 800px) {
-    margin: 1rem 1rem;
+    display: none;
   }
 `;
 
@@ -87,6 +87,36 @@ const StyleEmpty = styled.h4`
   text-align: center;
   margin: 1rem auto;
   text-transform: uppercase;
+`;
+
+const StyleProductDetailWrapper = styled.div`
+  display: none;
+
+  @media only screen and (max-width: 800px) {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem 0.3rem;
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+`;
+
+const MobileProductImage = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  margin-right: 1rem;
+`;
+
+const ProductDetailContentWrapper = styled.div`
+  flex: 1;
+`;
+
+const FlexBetween = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export default function CheckOut() {
@@ -169,10 +199,31 @@ export default function CheckOut() {
             </table>
             <hr style={{ marginTop: '-1rem' }} />
           </StyleOrder>
+          {orders.map((item, index) => {
+            if (item.quantity <= 0) {
+              return null;
+            }
+            return (
+              <StyleProductDetailWrapper key={item.size + item.id}>
+                <MobileProductImage
+                  alt={item.name}
+                  src={require(`../../assets/products/${item.image}`)}
+                />
+                <ProductDetailContentWrapper>
+                  <FlexBetween>
+                    <p>{item.name}</p>
+                    <p>{item.size}</p>
+                  </FlexBetween>
+                  <FlexBetween>
+                    <div>{renderQuantityOption(item)}</div>
+                    <p>{item.price}</p>
+                  </FlexBetween>
+                </ProductDetailContentWrapper>
+              </StyleProductDetailWrapper>
+            );
+          })}
           <WrapperButton>
-            <StyleButton onClick={onCheckOutClick}>
-              check out:${totalPrice}{' '}
-            </StyleButton>
+            <StyleButton onClick={onCheckOutClick}>check out:${totalPrice} </StyleButton>
           </WrapperButton>
         </React.Fragment>
       ) : (

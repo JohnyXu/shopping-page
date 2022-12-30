@@ -46,7 +46,7 @@ const FilterContentWrapper = styled.div`
   z-index: 1;
   > p {
     text-transform: uppercase;
-    background-color: rgb(246, 246, 246);
+    background-color: rgb(226, 222, 222);
     margin: 0;
     text-align: center;
     padding: 0.6rem 1rem;

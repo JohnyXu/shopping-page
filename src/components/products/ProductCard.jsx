@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   padding: 2rem 1rem;
-  background-color: white;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
 `;
 
 const StyleImg = styled.img`
@@ -30,16 +31,8 @@ const StylePrice = styled.p`
 export default function ProductCard({ product }) {
   return (
     <Wrapper>
-      <Link
-        to={`/product/${product.id}`}
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        <StyleImg
-          alt="goods"
-          src={
-            require(`../../assets/products/${product.image}`).default
-          }
-        />
+      <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <StyleImg alt="goods" src={require(`../../assets/products/${product.image}`)} />
         <StyleTitle>{product.name}</StyleTitle>
       </Link>
       <StylePrice>$ {product.price}</StylePrice>

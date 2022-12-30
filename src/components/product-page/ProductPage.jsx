@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { orderActions } from '../../redux/order';
+import { orderActions } from 'redux/order';
 import NavRoute from './NavRoute';
 
 const { products } = require('../../assets/json/products.json');
@@ -111,8 +110,6 @@ export default function ProductPage() {
   const [errMsg, setErrMsg] = useState('');
 
   const MAX_COUNT = 3;
-  // eslint-disable-next-line
-  const history = useHistory();
   const { id } = useParams();
   const product = products.find((item) => {
     return item.id === Number(id);
@@ -140,6 +137,7 @@ export default function ProductPage() {
       id: product.id,
       name: product.name,
       size: size,
+      image: product.image,
       singlePrice: Number(product.price),
       quantity: Number(quantity),
       price: product.price * quantity,
@@ -147,18 +145,14 @@ export default function ProductPage() {
     dispatch(orderActions.addToCart(orderInfo));
   };
 
+  console.log(product);
+
   return (
     <Wrapper>
       <NavRoute title={product.name} />
       <StyleContent>
         <WrapperImg>
-          <StyleImg
-            alt={product.name}
-            src={
-              require(`../../assets/products/${product.image}`)
-                .default
-            }
-          />
+          <StyleImg alt={product.name} src={require(`../../assets/products/${product.image}`)} />
         </WrapperImg>
         <StyleProduct>
           <h3>{product.name}</h3>
@@ -176,15 +170,13 @@ export default function ProductPage() {
             </select>
             <select value={quantity} onChange={onQuantityChange}>
               <option value="">Select Quantity</option>
-              {Array.from({ length: MAX_COUNT }, (_, k) => k + 1).map(
-                (count) => {
-                  return (
-                    <option key={count} value={count}>
-                      {count}
-                    </option>
-                  );
-                },
-              )}
+              {Array.from({ length: MAX_COUNT }, (_, k) => k + 1).map((count) => {
+                return (
+                  <option key={count} value={count}>
+                    {count}
+                  </option>
+                );
+              })}
             </select>
           </WrapperSelect>
           <p style={{ color: 'red' }}>{errMsg}</p>
